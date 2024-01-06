@@ -1,0 +1,40 @@
+#brute approach
+class Solution(object):
+    def rotate(self, nums, k):
+        n = len(nums)
+        k = k % n
+        rotated_nums = [0] * n
+
+        # Reverse the last k elements and copy them to the beginning of rotated_nums
+        for i in range(k):
+            rotated_nums[i] = nums[n - k + i]
+
+        # Reverse the first n-k elements and copy them to the remaining positions in rotated_nums
+        for i in range(n - k):
+            rotated_nums[i + k] = nums[i]
+
+        # Copy rotated values back to the original nums array
+        for i in range(n):
+            nums[i] = rotated_nums[i]
+
+
+#optimal
+class Solution(object):
+    def rotate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        k= k%n
+        self.reverse(nums,0,n-k-1)
+        self.reverse(nums,n-k,n-1)
+        self.reverse(nums,0,n-1)
+
+    def reverse(self,nums,s,e):
+        while s<e:
+            nums[s],nums[e]=nums[e],nums[s]
+            s+=1
+            e-=1
+        
