@@ -1,0 +1,34 @@
+#tabulation
+class Solution(object):
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        n = len(nums)
+        dp = [False]*n
+        dp[n-1]=True
+        for i in range(n-2,-1,-1):
+            if nums[i]==0:
+                continue
+            for j in range(i,i+nums[i]+1):
+                if j<n and dp[j]:
+                    dp[i]=True
+                    break
+        
+        return dp[0]
+
+
+#optimal
+class Solution(object):
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        maxi = 0
+        for i in range(len(nums)):
+            if maxi<i:
+                return False
+            maxi = max(maxi,i+nums[i])
+        return True
