@@ -15,7 +15,7 @@ class Solution(object):
                 miniSteps = min(miniSteps,1+self.helper(nums,i+ind))
         return miniSteps
 
-#Recursion
+#Memoization
 class Solution(object):
     def jump(self, nums):
         """
