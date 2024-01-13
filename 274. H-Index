@@ -1,0 +1,37 @@
+
+#Brute approach
+class Solution(object):
+    def hIndex(self, citations):
+        """
+        :type citations: List[int]
+        :rtype: int
+        """
+        n = len(citations)
+        citations.sort()
+        maxi = 0
+        for i in range(n):
+            if citations[i]>=n-i:
+                maxi = max(maxi,n-i)
+
+        return maxi
+
+#optimised
+class Solution(object):
+    def hIndex(self, citations):
+        """
+        :type citations: List[int]
+        :rtype: int
+        """
+        citations.sort()
+        maxi = 0
+        n = len(citations)
+        start = 0
+        end = n-1
+        while start<=end:
+            mid = (start+end)//2
+            if citations[mid]>=n-mid:
+                maxi = max(maxi,n-mid)
+                end = mid-1
+            else:
+                start= mid+1
+        return maxi
