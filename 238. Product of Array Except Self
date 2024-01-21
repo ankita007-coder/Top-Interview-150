@@ -1,3 +1,5 @@
+
+#optimal
 class Solution(object):
     def productExceptSelf(self, nums):
         """
@@ -14,4 +16,46 @@ class Solution(object):
         for i in range(n-1,-1,-1):
             ans[i]*=prod
             prod*=nums[i]
+        return ans
+
+
+#better approach (division)
+
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n = len(nums)
+        ans = [1] * n
+        
+        # Calculate the total product of all elements
+        total_product = 1
+        for num in nums:
+            total_product *= num
+        
+        # Divide the total product by each element to get the result
+        for i in range(n):
+            ans[i] = total_product // nums[i]
+        
+        return ans
+
+#brute
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n = len(nums)
+        ans = [1] * n
+
+        for i in range(n):
+            prod = 1
+            for j in range(n):
+                if i != j:
+                    prod *= nums[j]
+            ans[i] = prod
+
         return ans
