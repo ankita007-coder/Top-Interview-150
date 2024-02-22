@@ -1,0 +1,19 @@
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if numRows==1 or numRows>=len(s):
+            return s
+        row,j=0,1
+        arr = ['']*numRows
+        for ch in s:
+            arr[row]+=ch
+            if row==0:
+                j=1
+            elif row==numRows-1:
+                j=-1
+            row+=j
+        return ''.join(arr)
