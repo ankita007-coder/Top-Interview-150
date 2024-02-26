@@ -1,0 +1,22 @@
+#using pre-built function
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        if needle in haystack:
+            return haystack.index(needle)
+        else:
+            return -1
+
+#another approach
+class Solution(object):
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        n = len(needle)
+        m = len(haystack)
+        for i in range(m-n+1):
+            if haystack[i:i+n]==needle:
+                return i
+        return -1
