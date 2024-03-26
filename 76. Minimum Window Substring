@@ -1,0 +1,33 @@
+class Solution(object):
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        if not s or not t or len(t)>len(s):
+            return ""
+        c = len(t)
+        map = [0]*128
+        start,end,startidx,mini = 0,0,0,float('inf')
+        for ch in t:
+            map[ord(ch)]+=1
+        while end<len(s):
+            if map[ord(s[end])]>0:
+                c-=1
+            map[ord(s[end])]-=1
+            end+=1
+            while c==0:
+                if end-start<mini:
+                    startidx=start
+                    mini = end-start
+                if map[ord(s[start])]==0:
+                    c+=1
+                map[ord(s[start])]+=1
+                start+=1
+        if mini==float('inf'):
+            return ""
+        else:
+            return s[startidx:startidx+mini]
+            
+        
