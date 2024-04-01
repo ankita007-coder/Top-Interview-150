@@ -1,0 +1,13 @@
+class Solution(object):
+    def isValidSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """
+        res = []
+        for i in range(len(board)):
+            for j in range(len(board)):
+                if board[i][j]!='.':
+                    res+=[(board[i][j],i),(j,board[i][j]),(board[i][j],i//3,j//3)]
+        
+        return len(res)==len(set(res))
