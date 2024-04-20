@@ -1,0 +1,79 @@
+#optimal
+class Solution(object):
+    def setZeroes(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+        isRowZero = False
+        n = len(matrix)
+        m = len(matrix[0])
+        for i in range(n):
+            for j in range(m):
+                if matrix[i][j]==0:
+                    matrix[0][j]=0
+                    if i>0:
+                        matrix[i][0]=0
+                    else:
+                        isRowZero = True
+        
+        for i in range(1,n):
+            for j in range(1,m):
+                if matrix[0][j]==0 or matrix[i][0]==0:
+                    matrix[i][j]=0
+        
+        if matrix[0][0]==0:
+            for i in range(n):
+                matrix[i][0]=0
+        
+        if isRowZero:
+            for i in range(m):
+                matrix[0][i]==0
+
+
+
+#Brute
+class Solution:
+    def setZeroes(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: None Do not return anything, modify matrix in-place instead.
+        """
+        if not matrix:
+            return
+        
+        rows = len(matrix)
+        cols = len(matrix[0])
+        
+        # Check if the first row or first column should be zeroed out
+        first_row_zero = any(matrix[0][j] == 0 for j in range(cols))
+        first_col_zero = any(matrix[i][0] == 0 for i in range(rows))
+        
+        # Mark zero rows and columns using the first row and first column
+        for i in range(1, rows):
+            for j in range(1, cols):
+                if matrix[i][j] == 0:
+                    matrix[i][0] = 0  # Mark the corresponding row
+                    matrix[0][j] = 0  # Mark the corresponding column
+        
+        # Zero out marked rows (except the first row)
+        for i in range(1, rows):
+            if matrix[i][0] == 0:
+                for j in range(cols):
+                    matrix[i][j] = 0
+        
+        # Zero out marked columns (except the first column)
+        for j in range(1, cols):
+            if matrix[0][j] == 0:
+                for i in range(rows):
+                    matrix[i][j] = 0
+        
+        # Zero out the first row if necessary
+        if first_row_zero:
+            for j in range(cols):
+                matrix[0][j] = 0
+        
+        # Zero out the first column if necessary
+        if first_col_zero:
+            for i in range(rows):
+                matrix[i][0] = 0
