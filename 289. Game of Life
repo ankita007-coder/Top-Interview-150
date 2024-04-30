@@ -1,0 +1,77 @@
+#optimal
+class Solution(object):
+    def gameOfLife(self, board):
+        """
+        :type board: List[List[int]]
+        :rtype: None Do not return anything, modify board in-place instead.
+        """
+        rows = len(board)
+        cols = len(board[0])
+
+        for i in range(rows):
+            for j in range(cols):
+                if board[i][j]==0:
+                    board[i][j]=-2
+                else:
+                    board[i][j]=-1
+        
+        for i in range(rows):
+            for j in range(cols):
+                count = self.helper(i,j,rows,cols,board)
+                if abs(board[i][j])==1 and (count==2 or count==3):
+                    board[i][j] = abs(board[i][j])
+                if abs(board[i][j])==2 and count==3:
+                    board[i][j] = abs(board[i][j])
+        
+        for i in range(rows):
+            for j in range(cols):
+                if board[i][j]<0:
+                    board[i][j]=0
+                else:
+                    board[i][j]=1
+    def helper(self,i,j,rows,cols,board):
+        directions = [(-1,-1),(-1,0),(-1,1),(0,-1),(0,1),(1,-1),(1,0),(1,1)]
+        alive = 0
+        for r,c in directions:
+            row = r+i
+            col = c+j
+            if row>-1 and row<rows and col>-1 and col<cols:
+                if abs(board[row][col])==1:
+                    alive+=1
+        return alive
+
+
+
+#brute
+class Solution(object):
+    def gameOfLife(self, board):
+        """
+        :type board: List[List[int]]
+        :rtype: None Do not return anything, modify board in-place instead.
+        """
+        rows = len(board)
+        cols = len(board[0])
+        
+        # Create a copy of the board
+        new_board = [[0] * cols for _ in range(rows)]
+        for i in range(rows):
+            for j in range(cols):
+                new_board[i][j] = board[i][j]
+
+        for i in range(rows):
+            for j in range(cols):
+                count = self.helper(i, j, rows, cols, new_board)
+                if new_board[i][j] == 0 and (count == 3):
+                    board[i][j] = 1
+                if new_board[i][j] == 1 and (count < 2 or count > 3):
+                    board[i][j] = 0
+    
+    def helper(self, i, j, rows, cols, board):
+        directions = [(-1,-1), (-1,0), (-1,1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]
+        alive = 0
+        for r, c in directions:
+            row = r + i
+            col = c + j
+            if 0 <= row < rows and 0 <= col < cols and board[row][col] == 1:
+                alive += 1
+        return alive
