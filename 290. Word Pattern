@@ -1,0 +1,18 @@
+class Solution(object):
+    def wordPattern(self, pattern, s):
+        """
+        :type pattern: str
+        :type s: str
+        :rtype: bool
+        """
+        li = s.split(' ')
+        if len(pattern)!=len(li):
+            return False
+        d1 = {}
+        d2 = {}
+        for i in range(len(li)):
+            if d1.get(pattern[i])!=d2.get(li[i]):
+                return False
+            d1[pattern[i]]=i
+            d2[li[i]]=i
+        return True
